@@ -168,6 +168,12 @@ func cmdDel(args *skel.CmdArgs) error {
 }
 
 func main() {
+	logf, _ := os.OpenFile("/tmp/dnsname.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	defer logf.Close()
+	logrus.SetOutput(logf)
+	logrus.SetLevel(logrus.DebugLevel)
+	logrus.Info("staring dnsname")
+
 	skel.PluginMain(cmdAdd, cmdCheck, cmdDel, version.All, getVersion())
 }
 
