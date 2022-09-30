@@ -60,7 +60,7 @@ type dnsNameFile struct {
 // dnsNameConfPath tells where we store the conf, pid, and hosts files
 func dnsNameConfPath() string {
 	xdgRuntimeDir := os.Getenv("XDG_RUNTIME_DIR")
-	if xdgRuntimeDir != "" {
+	if xdgRuntimeDir != "" && os.Getuid() != 0 {
 		return filepath.Join(xdgRuntimeDir, "containers/cni/dnsname")
 	}
 	return "/run/containers/cni/dnsname"
